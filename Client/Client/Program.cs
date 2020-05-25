@@ -10,6 +10,7 @@ namespace Client
     {
         static void Main(string[] args)
         {
+            
             TcpClient client = new TcpClient();
 
             Console.WriteLine("Port:");
@@ -29,9 +30,11 @@ namespace Client
 
                 Console.WriteLine("Skriv din besked:");
                 string text = Console.ReadLine();
+                                
                 byte[] bytes = Encoding.UTF8.GetBytes(text);
-
                 stream.Write(bytes, 0, bytes.Length);
+                
+                                
             }
                         
             client.Close();
