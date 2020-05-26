@@ -9,6 +9,16 @@ namespace Server
     {
         static void Main(string[] args)
         {
+            server server = new server();
+            Console.WriteLine(server);
+        }
+        
+    }
+    
+    public class server
+    {
+        public server()
+        {
             int port = 420;
             IPAddress ip = IPAddress.Any;
             IPEndPoint endpoint = new IPEndPoint(ip, port);
@@ -21,16 +31,24 @@ namespace Server
             TcpClient client = listener.AcceptTcpClient();
 
             NetworkStream stream = client.GetStream();
+            RecMes(stream);
 
+            Console.WriteLine("Write mes");
+            string text = Console.ReadLine();
+            byte[] bytes = Encoding.UTF8.GetBytes(text);
+
+            stream.Write(bytes, 0, bytes.Length);
+
+            Console.ReadKey();
+        }
+        public async void RecMes(NetworkStream stream)
+        {
             byte[] buffer = new byte[256];
 
-            while (true)
-            {                                
-                int numb = stream.Read(buffer, 0, buffer.Length);
+            int numb = await stream.ReadAsync(buffer, 0, buffer.Length);
+            string mes = Encoding.UTF8.GetString(buffer, 0, numb);
 
-                string mes = Encoding.UTF8.GetString(buffer, 0, numb);
-                Console.WriteLine(mes);
-            }
+            Console.WriteLine("\n" + mes);
         }
     }
 }
