@@ -10,7 +10,7 @@ namespace Server
         static void Main(string[] args)
         {
             server server = new server();
-            Console.WriteLine(server);
+            
         }
         
     }
@@ -34,12 +34,13 @@ namespace Server
             RecMes(stream);
 
             Console.WriteLine("Write mes");
-            string text = Console.ReadLine();
-            byte[] bytes = Encoding.UTF8.GetBytes(text);
+            while (true)
+            {
+                string text = Console.ReadLine();
+                byte[] bytes = Encoding.UTF8.GetBytes(text);
 
-            stream.Write(bytes, 0, bytes.Length);
-
-            Console.ReadKey();
+                stream.Write(bytes, 0, bytes.Length);
+            }
         }
         public async void RecMes(NetworkStream stream)
         {
